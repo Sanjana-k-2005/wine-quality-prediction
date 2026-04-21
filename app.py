@@ -51,10 +51,14 @@ input_df = pd.DataFrame([{
 }])
 
 # ---------- Predict ----------
+# NOTE: The model was trained with LabelEncoder which encodes:
+#   'bad'  -> 0
+#   'good' -> 1
+# So prediction returns an integer (0 or 1), not a string.
 if st.button("Predict"):
     prediction = model.predict(input_df)[0]
 
-    if str(prediction).lower() == "good":
-        st.success(f"Good Quality 🍇")
-    else:
-        st.error(f"Bad Quality 🧪")
+    if prediction == 1:  # 1 = 'good'
+        st.success("Good Quality 🍇")
+    else:                # 0 = 'bad'
+        st.error("Bad Quality 🧪")
